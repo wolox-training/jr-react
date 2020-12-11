@@ -78,15 +78,7 @@
     ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 70,
-        "functions": 70,
-        "lines": 70,
-        "statements": 70
-      }
-    }
+    ]
   },
   "repository": {
     "type": "git",
@@ -110,8 +102,19 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint-diff && npm run lint-scss",
-      "pre-push": "npm run coverage-diff"
+      "pre-commit": "npm run lint-diff && npm run lint-scss"
     }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
