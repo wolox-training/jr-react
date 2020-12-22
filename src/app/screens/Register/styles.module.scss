@@ -1,0 +1,33 @@
+@import '../../../scss/variables/colors';
+
+.content-page {
+  max-width: 400px;
+  background: $bk-gray;
+  padding: 20px;
+  border-top: 6px solid $wolox-blue;
+  margin: 40px auto;
+
+  .header {
+    text-align: center;
+    padding: 15px;
+
+    img {
+      width: 100%;
+      max-width: 270px;
+    }
+  }
+
+  .body {
+    margin: 15px 0;
+  }
+
+  .footer {
+    padding-top: 15px;
+    border-top: 1px solid $dark-gray;
+    text-align: center;
+
+    .language {
+      margin-top: 15px;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+@import '../../../scss/variables/colors';
+
+.btn-structure {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  color: $white;
+
+  &.btn-green {
+    background: $wolox-green;
+    border: 1px solid $wolox-green;
+  }
+
+  &.btn-white {
+    background: $white;
+    border: 1px solid $wolox-green;
+    color: $wolox-green;
+  }
+
+  &:disabled {
+    background: $gray;
+    border-color: $gray;
+    cursor: not-allowed;
+  }
+}
