@@ -1,33 +1,15 @@
-@import '../../../scss/variables/colors';
+@import 'variables/colors';
 
-.content-page {
-  max-width: 400px;
-  background: $bk-gray;
-  padding: 20px;
-  border-top: 6px solid $wolox-blue;
-  margin: 40px auto;
+.body {
+  margin: 15px 0;
+}
 
-  .header {
-    text-align: center;
-    padding: 15px;
+.footer {
+  border-top: 1px solid $dark-gray;
+  padding-top: 15px;
+  text-align: center;
 
-    img {
-      width: 100%;
-      max-width: 270px;
-    }
-  }
-
-  .body {
-    margin: 15px 0;
-  }
-
-  .footer {
-    padding-top: 15px;
-    border-top: 1px solid $dark-gray;
-    text-align: center;
-
-    .language {
-      margin-top: 15px;
-    }
+  .language {
+    margin-top: 15px;
   }
 }

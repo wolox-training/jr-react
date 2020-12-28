@@ -13,8 +13,15 @@ interface Props {
 function Input({ labelText, type = 'text', inputRef, name, errorMessage = '' }: Props) {
   return (
     <div className={styles.contentInput}>
-      <label htmlFor="">{labelText}</label>
-      <input type={type} ref={inputRef} name={name} className={errorMessage ? 'input-error' : ''} />
+      <label className={styles.label} htmlFor="">
+        {labelText}
+      </label>
+      <input
+        type={type}
+        ref={inputRef}
+        name={name}
+        className={`${styles.input} ${errorMessage && 'input-error'} full-width`}
+      />
       {errorMessage && <span className="text-error">{errorMessage}</span>}
     </div>
   );

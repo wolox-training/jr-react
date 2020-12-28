@@ -27,3 +27,27 @@
 .hidden {
   visibility: hidden;
 }
+
+.btn-structure {
+  border-radius: 6px;
+  color: $white;
+  padding: 8px;
+  width: 100%;
+
+  &.btn-green {
+    background: $wolox-green;
+    border: 1px solid $wolox-green;
+  }
+
+  &.btn-white {
+    background: $white;
+    border: 1px solid $wolox-green;
+    color: $wolox-green;
+  }
+
+  &:disabled {
+    background: $gray;
+    border-color: $gray;
+    cursor: not-allowed;
+  }
+}

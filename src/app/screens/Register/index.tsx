@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import i18next from 'i18next';
 import { useForm } from 'react-hook-form';
 
+import AuthWrapper from '~components/AuthWrapper';
+
 import Input from '../../components/Input';
-import Button from '../../components/Button';
-import imageWolox from '../../assets/wolox.svg';
 import { emailRegex } from '../../../utils/inputValidations';
 
 import styles from './styles.module.scss';
@@ -45,10 +45,7 @@ function Register() {
   };
 
   return (
-    <div className={styles.contentPage}>
-      <div className={styles.header}>
-        <img src={imageWolox} alt={i18next.t('Register:logoAlt') as string} />
-      </div>
+    <AuthWrapper>
       <form className={styles.body} onSubmit={handleSubmit(submitForm)}>
         <Input
           labelText={i18next.t('Register:firstName')}
@@ -102,15 +99,20 @@ function Register() {
             (i18next.t(errors.passwordConfirmation?.message) as string)
           }
         />
-        <Button text={i18next.t('Register:btnRegister')} disabled={!formState.isValid} />
+
+        <button type="submit" disabled={!formState.isValid} className="btn-structure btn-green">
+          {i18next.t('Register:btnRegister')}
+        </button>
       </form>
       <div className={styles.footer}>
-        <Button text={i18next.t('Register:btnLogin')} className="btnWhite" />
+        <button type="button" className="btn-structure btn-white">
+          {i18next.t('Register:btnLogin')}
+        </button>
         <button onClick={changeLang} type="button" className={styles.language}>
           {i18next.t('Register:btnLanguage')}
         </button>
       </div>
-    </div>
+    </AuthWrapper>
   );
 }
 

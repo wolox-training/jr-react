@@ -1,0 +1,18 @@
+@import 'variables/colors';
+
+.content-page {
+    background: $bk-gray;
+    border-top: 6px solid $wolox-blue;
+    margin: 40px auto;
+    max-width: 400px;
+    padding: 20px;
+  
+    .header {
+      padding: 15px;
+      text-align: center;
+  
+      .img-logo {
+        max-width: 270px;
+      }
+    }
+}
