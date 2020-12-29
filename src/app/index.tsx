@@ -1,11 +1,11 @@
 import React from 'react';
 
+import Register from '~screens/Register';
+
 import '../scss/application.scss';
 
-import Home from './screens/Home';
-
 function App() {
-  return <Home />;
+  return <Register />;
 }
 
 export default App;
