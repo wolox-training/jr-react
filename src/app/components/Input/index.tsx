@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import i18next from 'i18next';
 
 import styles from './styles.module.scss';
 
@@ -23,7 +24,7 @@ function Input({ labelText, type = 'text', inputRef, name, errorMessage = '' }: 
         name={name}
         className={clsx('full-width', styles.input, { 'input-error': errorMessage })}
       />
-      {errorMessage && <span className="text-error">{errorMessage}</span>}
+      {errorMessage && <span className="text-error">{i18next.t(errorMessage)}</span>}
     </div>
   );
 }

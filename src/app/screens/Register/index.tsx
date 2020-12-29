@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import i18next from 'i18next';
 import { useForm } from 'react-hook-form';
 
 import AuthWrapper from '~components/AuthWrapper';
-
-import Input from '../../components/Input';
-import { emailRegex } from '../../../utils/inputValidations';
+import Input from '~components/Input';
+import { emailRegex } from '~utils/inputValidations';
+import { AUTH_FIELDS } from '~constants/fields';
 
 import styles from './styles.module.scss';
 
@@ -13,20 +13,18 @@ interface DataForm {
   email: string;
   firstName: string;
   lastName: string;
+  locale: string;
   password: string;
   passwordConfirmation: string;
-  locale: string;
 }
 
 function Register() {
-  const { register, handleSubmit, errors, formState, watch } = useForm<DataForm>({
+  const { register, handleSubmit, errors, formState, getValues } = useForm({
     mode: 'all'
   });
 
-  const [language, setLanguage] = useState(i18next.language);
-
   const submitForm = (data: DataForm) => {
-    data.locale = language;
+    data.locale = i18next.language;
     const user = {
       user: data
     };
@@ -34,82 +32,68 @@ function Register() {
   };
 
   const validatePassword = (passwordConfirmation: string) =>
-    passwordConfirmation === watch('password') ? true : 'Register:passwordNotMatch';
-
-  const changeLang = () => {
-    const translationTo = i18next.language === 'es' ? 'en' : 'es';
-
-    i18next.changeLanguage(translationTo, () => {
-      setLanguage(i18next.language);
-    });
-  };
+    passwordConfirmation === getValues('password') ? true : 'FormValidations:passwordNotMatch';
 
   return (
     <AuthWrapper>
       <form className={styles.body} onSubmit={handleSubmit(submitForm)}>
         <Input
           labelText={i18next.t('Register:firstName')}
-          name="firstName"
+          name={AUTH_FIELDS.firstName}
           inputRef={register({
-            required: { value: true, message: 'Register:errorRequired' }
+            required: { value: true, message: 'FormValidations:errorRequired' }
           })}
-          errorMessage={errors.firstName?.message && (i18next.t(errors.firstName?.message) as string)}
+          errorMessage={errors[AUTH_FIELDS.firstName]?.message}
         />
 
         <Input
           labelText={i18next.t('Register:lastName')}
-          name="lastName"
+          name={AUTH_FIELDS.lastName}
           inputRef={register({
-            required: { value: true, message: 'Register:errorRequired' }
+            required: { value: true, message: 'FormValidations:errorRequired' }
           })}
-          errorMessage={errors.lastName?.message && (i18next.t(errors.lastName?.message) as string)}
+          errorMessage={errors[AUTH_FIELDS.lastName]?.message}
         />
         <Input
-          labelText={i18next.t('Register:email')}
-          name="email"
+          labelText={i18next.t('FormAuth:email')}
+          name={AUTH_FIELDS.email}
           inputRef={register({
-            required: { value: true, message: 'Register:errorRequired' },
+            required: { value: true, message: 'FormValidations:errorRequired' },
             pattern: {
               value: emailRegex,
-              message: 'Register:errorEmail'
+              message: 'FormValidations:errorEmail'
             }
           })}
           type="email"
-          errorMessage={errors.email?.message && (i18next.t(errors.email?.message) as string)}
+          errorMessage={errors[AUTH_FIELDS.email]?.message}
         />
         <Input
-          labelText={i18next.t('Register:password')}
-          name="password"
+          labelText={i18next.t('FormAuth:password')}
+          name={AUTH_FIELDS.password}
           inputRef={register({
-            required: { value: true, message: 'Register:errorRequired' }
+            required: { value: true, message: 'FormValidations:errorRequired' }
           })}
           type="password"
-          errorMessage={errors.password?.message && (i18next.t(errors.password?.message) as string)}
+          errorMessage={errors[AUTH_FIELDS.password]?.message}
         />
         <Input
           labelText={i18next.t('Register:passwordConfirmation')}
-          name="passwordConfirmation"
+          name={AUTH_FIELDS.passwordConfirmation}
           inputRef={register({
-            required: { value: true, message: 'Register:errorRequired' },
-            validate: value => validatePassword(value)
+            required: { value: true, message: 'FormValidations:errorRequired' },
+            validate: validatePassword
           })}
           type="password"
-          errorMessage={
-            errors.passwordConfirmation?.message &&
-            (i18next.t(errors.passwordConfirmation?.message) as string)
-          }
+          errorMessage={errors[AUTH_FIELDS.passwordConfirmation]?.message}
         />
 
         <button type="submit" disabled={!formState.isValid} className="btn-structure btn-green">
-          {i18next.t('Register:btnRegister')}
+          {i18next.t('FormAuth:btnRegister')}
         </button>
       </form>
       <div className={styles.footer}>
         <button type="button" className="btn-structure btn-white">
-          {i18next.t('Register:btnLogin')}
-        </button>
-        <button onClick={changeLang} type="button" className={styles.language}>
-          {i18next.t('Register:btnLanguage')}
+          {i18next.t('FormAuth:btnLogin')}
         </button>
       </div>
     </AuthWrapper>
