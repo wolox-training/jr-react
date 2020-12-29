@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 
 import styles from './styles.module.scss';
 
@@ -20,7 +21,7 @@ function Input({ labelText, type = 'text', inputRef, name, errorMessage = '' }: 
         type={type}
         ref={inputRef}
         name={name}
-        className={`${styles.input} ${errorMessage && 'input-error'} full-width`}
+        className={clsx('full-width', styles.input, { 'input-error': errorMessage })}
       />
       {errorMessage && <span className="text-error">{errorMessage}</span>}
     </div>
