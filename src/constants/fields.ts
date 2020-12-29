@@ -1,6 +1,6 @@
 export const AUTH_FIELDS = {
   email: 'email',
-  firstName: 'firstNames',
+  firstName: 'firstName',
   lastName: 'lastName',
   password: 'password',
   passwordConfirmation: 'passwordConfirmation'

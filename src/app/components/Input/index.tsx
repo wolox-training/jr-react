@@ -14,7 +14,7 @@ interface Props {
 
 function Input({ labelText, type = 'text', inputRef, name, errorMessage = '' }: Props) {
   return (
-    <div className={styles.contentInput}>
+    <div className={`row wrap ${styles.contentInput}`}>
       <label className={styles.label} htmlFor="">
         {labelText}
       </label>

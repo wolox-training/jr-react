@@ -19,31 +19,31 @@ interface DataForm {
 }
 
 function Register() {
-  const { register, handleSubmit, errors, formState, getValues } = useForm({
+  const { register, handleSubmit, errors, formState, watch } = useForm<DataForm>({
     mode: 'all'
   });
 
-  const submitForm = (data: DataForm) => {
+  const onSubmit = handleSubmit(data => {
     data.locale = i18next.language;
     const user = {
       user: data
     };
     console.log(user);
-  };
+  });
 
   const validatePassword = (passwordConfirmation: string) =>
-    passwordConfirmation === getValues('password') ? true : 'FormValidations:passwordNotMatch';
+    passwordConfirmation === watch('password') ? true : 'FormValidations:passwordNotMatch';
 
   return (
     <AuthWrapper>
-      <form className={styles.body} onSubmit={handleSubmit(submitForm)}>
+      <form className={styles.body} onSubmit={onSubmit}>
         <Input
           labelText={i18next.t('Register:firstName')}
           name={AUTH_FIELDS.firstName}
           inputRef={register({
             required: { value: true, message: 'FormValidations:errorRequired' }
           })}
-          errorMessage={errors[AUTH_FIELDS.firstName]?.message}
+          errorMessage={errors.firstName?.message}
         />
 
         <Input
@@ -52,7 +52,7 @@ function Register() {
           inputRef={register({
             required: { value: true, message: 'FormValidations:errorRequired' }
           })}
-          errorMessage={errors[AUTH_FIELDS.lastName]?.message}
+          errorMessage={errors.lastName?.message}
         />
         <Input
           labelText={i18next.t('FormAuth:email')}
@@ -65,7 +65,7 @@ function Register() {
             }
           })}
           type="email"
-          errorMessage={errors[AUTH_FIELDS.email]?.message}
+          errorMessage={errors.email?.message}
         />
         <Input
           labelText={i18next.t('FormAuth:password')}
@@ -74,7 +74,7 @@ function Register() {
             required: { value: true, message: 'FormValidations:errorRequired' }
           })}
           type="password"
-          errorMessage={errors[AUTH_FIELDS.password]?.message}
+          errorMessage={errors.password?.message}
         />
         <Input
           labelText={i18next.t('Register:passwordConfirmation')}
@@ -84,15 +84,15 @@ function Register() {
             validate: validatePassword
           })}
           type="password"
-          errorMessage={errors[AUTH_FIELDS.passwordConfirmation]?.message}
+          errorMessage={errors.passwordConfirmation?.message}
         />
 
-        <button type="submit" disabled={!formState.isValid} className="btn-structure btn-green">
+        <button type="submit" disabled={!formState.isValid} className="button btn-green">
           {i18next.t('FormAuth:btnRegister')}
         </button>
       </form>
       <div className={styles.footer}>
-        <button type="button" className="btn-structure btn-white">
+        <button type="button" className="button btn-white">
           {i18next.t('FormAuth:btnLogin')}
         </button>
       </div>
