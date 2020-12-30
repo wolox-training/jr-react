@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import React from 'react';
 import i18next from 'i18next';
 import { useForm } from 'react-hook-form';
@@ -6,37 +7,51 @@ import AuthWrapper from '~components/AuthWrapper';
 import Input from '~components/Input';
 import { emailRegex } from '~utils/inputValidations';
 import { AUTH_FIELDS } from '~constants/fields';
+import { useLazyRequest } from '~app/hooks/useRequest';
+import { apiRegister } from '~services/Auth';
+import AlertMessage from '~components/AlertMessage';
+import { User } from '~utils/types';
 
 import styles from './styles.module.scss';
 
-interface DataForm {
-  email: string;
-  firstName: string;
-  lastName: string;
-  locale: string;
-  password: string;
-  passwordConfirmation: string;
-}
-
 function Register() {
-  const { register, handleSubmit, errors, formState, watch } = useForm<DataForm>({
+  const { register, handleSubmit, errors, formState, watch } = useForm<User>({
     mode: 'all'
-  });
-
-  const onSubmit = handleSubmit(data => {
-    data.locale = i18next.language;
-    const user = {
-      user: data
-    };
-    console.log(user);
   });
 
   const validatePassword = (passwordConfirmation: string) =>
     passwordConfirmation === watch('password') ? true : 'FormValidations:passwordNotMatch';
 
+  const [state, loading, error, sendRequest] = useLazyRequest({
+    request: apiRegister
+  });
+
+  const onSubmit = handleSubmit(data => {
+    data.locale = i18next.language;
+    data.first_name = data.firstName;
+    data.last_name = data.lastName;
+    data.password_confirmation = data.passwordConfirmation;
+    sendRequest(data);
+  });
+
+  const getErrorMessage = () => {
+    if (!error?.errorData) {
+      return '';
+    }
+
+    if (error.errorData.status.toString() === '500') {
+      return error.errorData.error;
+    }
+    return error.errorData.errors.full_messages.toString().replaceAll(',', '\n');
+  };
+
   return (
     <AuthWrapper>
       <form className={styles.body} onSubmit={onSubmit}>
+        {error?.errorData && <AlertMessage type="error" message={getErrorMessage()} />}
+
+        {state && <AlertMessage type="success" message={i18next.t('Register:messageSuccess')} />}
+
         <Input
           labelText={i18next.t('Register:firstName')}
           name={AUTH_FIELDS.firstName}
@@ -87,7 +102,7 @@ function Register() {
           errorMessage={errors.passwordConfirmation?.message}
         />
 
-        <button type="submit" disabled={!formState.isValid} className="button btn-green">
+        <button type="submit" disabled={!formState.isValid || loading} className="button btn-green">
           {i18next.t('FormAuth:btnRegister')}
         </button>
       </form>

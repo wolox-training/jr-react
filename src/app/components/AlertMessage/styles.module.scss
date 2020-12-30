@@ -1,0 +1,29 @@
+@import 'variables/colors';
+
+.alert-message {
+  border-radius: 5px;
+  margin: 10px 0;
+  padding: 10px;
+
+  .title {
+    font-weight: 900;
+  }
+
+  &.success {
+    background-color: $bk-success-message;
+    border-color: $border-success-message;
+    color: $color-success-message;
+  }
+
+  &.error {
+    background-color: $bk-error-message;
+    border-color: $border-error-message;
+    color: $color-error-message;
+  }
+
+  &.warning {
+    background-color: $bk-warning-message;
+    border-color: $border-warning-message;
+    color: $color-warning-message;
+  }
+}
