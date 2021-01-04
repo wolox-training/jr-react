@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getTitleAlert } from '~utils/utils';
+import { ALERT_TITLES } from '~constants/fields';
 
 import styles from './styles.module.scss';
 
@@ -12,7 +12,7 @@ interface Props {
 function AlertMessage({ message, type }: Props) {
   return (
     <div className={`${styles.alertMessage} ${styles[type]}`} role="alert">
-      <h2 className={styles.title}>{getTitleAlert(type)}</h2>
+      <h2 className={styles.title}>{ALERT_TITLES[type]}</h2>
       {message}
     </div>
   );
