@@ -10,6 +10,7 @@ i18next.addResources('es', 'FormAuth', {
   btnLogin: 'Iniciar Sesión',
   btnRegister: 'Registrarme',
   email: 'Correo',
+  loading: 'Cargando...',
   password: 'Contraseña'
 });
 
@@ -17,6 +18,7 @@ i18next.addResources('en', 'FormAuth', {
   btnLogin: 'Login',
   btnRegister: 'Sign Up',
   email: 'Email',
+  loading: 'Loading...',
   password: 'Password'
 });
 
