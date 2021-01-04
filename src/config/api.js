@@ -1,4 +1,5 @@
 import { create } from 'apisauce';
+import { CamelcaseSerializer, SnakecaseSerializer } from 'cerealizr';
 
 const baseURL = 'https://books-training-rails.herokuapp.com/api/v1';
 
@@ -9,6 +10,9 @@ if (baseURL === 'http://wolox.com') {
 const STATUS_CODES = {
   unauthorized: 401
 };
+
+const deserializer = new CamelcaseSerializer();
+const serializer = new SnakecaseSerializer();
 
 const api = create({
   /*
@@ -36,5 +40,18 @@ export const apiSetup = dispatch => {
     }
   });
 };
+
+api.addResponseTransform(response => {
+  if (response.data) {
+    response.data = response.data ? deserializer.serialize(response.data) : null;
+  }
+});
+
+// Request transform to serialize the body to camel_case backend structure
+api.addRequestTransform(request => {
+  if (request.data) {
+    request.data = serializer.serialize(request?.data);
+  }
+});
 
 export default api;

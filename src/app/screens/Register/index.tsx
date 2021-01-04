@@ -28,9 +28,6 @@ function Register() {
 
   const onSubmit = handleSubmit(data => {
     data.locale = i18next.language;
-    data.first_name = data.firstName;
-    data.last_name = data.lastName;
-    data.password_confirmation = data.passwordConfirmation;
     sendRequest(data);
   });
 
@@ -42,7 +39,7 @@ function Register() {
     if (error.errorData.status.toString() === '500') {
       return error.errorData.error;
     }
-    return error.errorData.errors.full_messages.toString().replaceAll(',', '\n');
+    return error.errorData.errors.fullMessages.toString().replaceAll(',', '\n');
   };
 
   return (

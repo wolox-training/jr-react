@@ -4,7 +4,7 @@ import { User } from '~utils/types';
 interface ErrorResponse {
   error: string;
   errors: {
-    full_messages: Array<string>;
+    fullMessages: Array<string>;
   };
   status: string;
 }

@@ -2,11 +2,16 @@
 
 .alert-message {
   border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
   margin: 10px 0;
   padding: 10px;
 
   .title {
+    font-size: 16px;
     font-weight: 900;
+    margin-bottom: 5px;
+    width: 100%;
   }
 
   &.success {
