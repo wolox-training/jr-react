@@ -11,7 +11,7 @@ interface Props {
 
 function AlertMessage({ message, type }: Props) {
   return (
-    <div className={`${styles.alertMessage} ${styles[type]}`} role="alert">
+    <div className={`${styles.alertMessage} ${styles[type]}`} role="alert" aria-label={type}>
       <h2 className={styles.title}>{ALERT_TITLES[type]}</h2>
       {message}
     </div>

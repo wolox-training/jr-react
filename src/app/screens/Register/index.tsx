@@ -32,20 +32,21 @@ function Register() {
   });
 
   const getErrorMessage = () => {
-    if (!error?.errorData) {
+    if (!error?.problem) {
       return '';
     }
 
-    if (error.errorData.status.toString() === '500') {
-      return error.errorData.error;
+    if (error.problem === 'CLIENT_ERROR' && error.errorData) {
+      return error.errorData.errors.fullMessages.toString().replaceAll(',', '\n');
     }
-    return error.errorData.errors.fullMessages.toString().replaceAll(',', '\n');
+
+    return error.problem;
   };
 
   return (
     <AuthWrapper>
       <form className={styles.body} onSubmit={onSubmit}>
-        {error?.errorData && <AlertMessage type="error" message={getErrorMessage()} />}
+        {error?.problem && <AlertMessage type="error" message={getErrorMessage()} />}
 
         {state && <AlertMessage type="success" message={i18next.t('Register:messageSuccess')} />}
 
@@ -99,7 +100,13 @@ function Register() {
           errorMessage={errors.passwordConfirmation?.message}
         />
 
-        <button type="submit" disabled={!formState.isValid || loading} className="button btn-green">
+        <button
+          type="submit"
+          disabled={!formState.isValid || loading}
+          className="button btn-green"
+          role="button"
+          aria-label="Register"
+        >
           {i18next.t('FormAuth:btnRegister')}
         </button>
       </form>

@@ -15,16 +15,22 @@ interface Props {
 function Input({ labelText, type = 'text', inputRef, name, errorMessage = '' }: Props) {
   return (
     <div className={`row wrap ${styles.contentInput}`}>
-      <label className={styles.label} htmlFor="">
+      <label className={styles.label} htmlFor={name}>
         {labelText}
       </label>
       <input
         type={type}
         ref={inputRef}
         name={name}
+        id={name}
+        aria-label={name}
         className={clsx('full-width', styles.input, { 'input-error': errorMessage })}
       />
-      {errorMessage && <span className="text-error">{i18next.t(errorMessage)}</span>}
+      {errorMessage && (
+        <span className="text-error" role="alert">
+          {i18next.t(errorMessage)}
+        </span>
+      )}
     </div>
   );
 }
