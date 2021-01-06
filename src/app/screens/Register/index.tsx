@@ -10,11 +10,12 @@ import { AUTH_FIELDS } from '~constants/fields';
 import { useLazyRequest } from '~app/hooks/useRequest';
 import { apiRegister } from '~services/Auth';
 import AlertMessage from '~components/AlertMessage';
-import { User } from '~utils/types';
+import { User, FunctionForTest } from '~utils/types';
+import { getErrorMessage } from '~utils/getErrorMessageApi';
 
 import styles from './styles.module.scss';
 
-function Register() {
+function Register({ mockFunction }: FunctionForTest) {
   const { register, handleSubmit, errors, formState, watch } = useForm<User>({
     mode: 'all'
   });
@@ -27,26 +28,17 @@ function Register() {
   });
 
   const onSubmit = handleSubmit(data => {
+    if (mockFunction) {
+      mockFunction();
+    }
     data.locale = i18next.language;
     sendRequest(data);
   });
 
-  const getErrorMessage = () => {
-    if (!error?.problem) {
-      return '';
-    }
-
-    if (error.problem === 'CLIENT_ERROR' && error.errorData) {
-      return error.errorData.errors.fullMessages.toString().replaceAll(',', '\n');
-    }
-
-    return error.problem;
-  };
-
   return (
     <AuthWrapper>
       <form className={styles.body} onSubmit={onSubmit}>
-        {error?.problem && <AlertMessage type="error" message={getErrorMessage()} />}
+        {error?.problem && <AlertMessage type="error" message={getErrorMessage(error)} />}
 
         {state && <AlertMessage type="success" message={i18next.t('Register:messageSuccess')} />}
 
@@ -100,13 +92,7 @@ function Register() {
           errorMessage={errors.passwordConfirmation?.message}
         />
 
-        <button
-          type="submit"
-          disabled={!formState.isValid || loading}
-          className="button btn-green"
-          role="button"
-          aria-label="Register"
-        >
+        <button type="submit" disabled={!formState.isValid || loading} className="button btn-green">
           {i18next.t('FormAuth:btnRegister')}
         </button>
       </form>

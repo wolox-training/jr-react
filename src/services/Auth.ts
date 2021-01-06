@@ -1,7 +1,7 @@
 import api from '~config/api';
 import { User } from '~utils/types';
 
-interface ErrorResponse {
+export interface ErrorResponse {
   error: string;
   errors: {
     fullMessages: Array<string>;

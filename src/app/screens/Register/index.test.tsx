@@ -1,101 +1,63 @@
 import React from 'react';
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { rest } from 'msw';
 
-import { AUTH_FIELDS, USER_TEST } from '~constants/fields';
+import { setInputByLabelText } from '~utils/testUtils';
+import { server } from '~mocks/servers';
 
 import Register from './index';
 
-const setInputByRole = (name: string, value: string) => {
-  fireEvent.input(screen.getByRole('textbox', { name }), {
-    target: {
-      value
-    }
-  });
+const I18N_KEYS = {
+  firstName: 'Register:firstName',
+  lastName: 'Register:lastName',
+  email: 'FormAuth:email',
+  password: 'FormAuth:password',
+  passwordConfirmation: 'Register:passwordConfirmation',
+  buttonRegister: 'FormAuth:btnRegister'
 };
 
-const setInputByLabelText = (name: string, value: string) => {
-  fireEvent.input(screen.getByLabelText(name), {
-    target: {
-      value
-    }
-  });
+const USER_TEST = {
+  email: 'federico.gomez@test.com',
+  firstName: 'Federico',
+  lastName: 'Gomez',
+  password: 'asdf1234',
+  passwordConfirmation: 'asdf1234'
 };
 
-const server = setupServer(rest.post('/users', (req, res, ctx) => res(ctx.json({ data: req.body }))));
-
-describe('Register Form', () => {
-  beforeAll(() => server.listen());
-  beforeEach(() => server.resetHandlers());
-  afterAll(() => server.close());
-
-  it('Render', async () => {
-    await render(<Register />);
-    expect(screen.getByRole('textbox', { name: AUTH_FIELDS.firstName })).toBeInTheDocument();
-    expect(screen.getByRole('textbox', { name: AUTH_FIELDS.lastName })).toBeInTheDocument();
-    expect(screen.getByRole('textbox', { name: AUTH_FIELDS.email })).toBeInTheDocument();
-    expect(screen.getByLabelText(AUTH_FIELDS.password)).toBeInTheDocument();
-    expect(screen.getByLabelText(AUTH_FIELDS.passwordConfirmation)).toBeInTheDocument();
-
-    const buttonRegister = screen.getByRole('button', { name: 'Register' });
-    expect(buttonRegister).toHaveAttribute('disabled');
+describe('Screen Register', () => {
+  it('Renders successfully', () => {
+    const { asFragment } = render(<Register />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  it('Required fields', async () => {
-    await render(<Register />);
-    setInputByRole(AUTH_FIELDS.firstName, '');
-    setInputByRole(AUTH_FIELDS.lastName, '');
-    setInputByRole(AUTH_FIELDS.email, '');
-    setInputByLabelText(AUTH_FIELDS.password, '');
-    setInputByLabelText(AUTH_FIELDS.passwordConfirmation, '');
+  it('If the form is not completed correctly, it is not sent', async () => {
+    const mockSave = jest.fn();
 
-    const buttonRegister = screen.getByRole('button', { name: 'Register' });
-    expect(buttonRegister).toHaveAttribute('disabled', '');
+    render(<Register mockFunction={mockSave} />);
+
+    const buttonRegister = screen.getByRole('button', { name: I18N_KEYS.buttonRegister });
+    fireEvent.click(buttonRegister);
 
     const alertErrorShow = 5;
     expect(await screen.findAllByRole('alert')).toHaveLength(alertErrorShow);
-  });
-
-  it('Field validation', async () => {
-    await render(<Register />);
-    setInputByRole(AUTH_FIELDS.email, 'name');
-    setInputByLabelText(AUTH_FIELDS.password, 'asdf');
-    setInputByLabelText(AUTH_FIELDS.passwordConfirmation, 'fdsa');
-
-    const buttonRegister = screen.getByRole('button', { name: 'Register' });
-    expect(buttonRegister).toHaveAttribute('disabled', '');
-
-    const alertErrorShow = 2;
-    expect(await screen.findAllByRole('alert')).toHaveLength(alertErrorShow);
-  });
-
-  it('Form filled out without errors', async () => {
-    await render(<Register />);
-    setInputByRole(AUTH_FIELDS.firstName, USER_TEST.firstName);
-    setInputByRole(AUTH_FIELDS.lastName, USER_TEST.lastName);
-    setInputByRole(AUTH_FIELDS.email, USER_TEST.email);
-    setInputByLabelText(AUTH_FIELDS.password, USER_TEST.password);
-    setInputByLabelText(AUTH_FIELDS.passwordConfirmation, USER_TEST.passwordConfirmation);
-
-    const buttonRegister = screen.getByRole('button', { name: 'Register' });
-    expect(buttonRegister).not.toHaveAttribute('disabled', false);
+    expect(mockSave).not.toBeCalled();
   });
 
   test('Successful registration', async () => {
     render(<Register />);
-    setInputByRole(AUTH_FIELDS.firstName, USER_TEST.firstName);
-    setInputByRole(AUTH_FIELDS.lastName, USER_TEST.lastName);
-    setInputByRole(AUTH_FIELDS.email, USER_TEST.email);
-    setInputByLabelText(AUTH_FIELDS.password, USER_TEST.password);
-    setInputByLabelText(AUTH_FIELDS.passwordConfirmation, USER_TEST.passwordConfirmation);
 
-    const buttonRegister = screen.getByRole('button', { name: 'Register' });
+    setInputByLabelText(I18N_KEYS.firstName, USER_TEST.firstName);
+    setInputByLabelText(I18N_KEYS.lastName, USER_TEST.lastName);
+    setInputByLabelText(I18N_KEYS.email, USER_TEST.email);
+    setInputByLabelText(I18N_KEYS.password, USER_TEST.password);
+    setInputByLabelText(I18N_KEYS.passwordConfirmation, USER_TEST.passwordConfirmation);
+
+    const buttonRegister = screen.getByRole('button', { name: I18N_KEYS.buttonRegister });
     fireEvent.click(buttonRegister);
 
-    await waitFor(() => screen.getByRole('alert', { name: 'success' }));
+    await waitFor(() => screen.getByTestId('alert-success'));
 
-    expect(screen.getByRole('alert', { name: 'success' })).toBeInTheDocument();
+    expect(screen.getByTestId('alert-success')).toBeInTheDocument();
   });
 
   test('Internal server error', async () => {
@@ -107,17 +69,17 @@ describe('Register Form', () => {
     );
 
     render(<Register />);
-    setInputByRole(AUTH_FIELDS.firstName, USER_TEST.firstName);
-    setInputByRole(AUTH_FIELDS.lastName, USER_TEST.lastName);
-    setInputByRole(AUTH_FIELDS.email, USER_TEST.email);
-    setInputByLabelText(AUTH_FIELDS.password, USER_TEST.password);
-    setInputByLabelText(AUTH_FIELDS.passwordConfirmation, USER_TEST.passwordConfirmation);
+    setInputByLabelText(I18N_KEYS.firstName, USER_TEST.firstName);
+    setInputByLabelText(I18N_KEYS.lastName, USER_TEST.lastName);
+    setInputByLabelText(I18N_KEYS.email, USER_TEST.email);
+    setInputByLabelText(I18N_KEYS.password, USER_TEST.password);
+    setInputByLabelText(I18N_KEYS.passwordConfirmation, USER_TEST.passwordConfirmation);
 
-    const buttonRegister = screen.getByRole('button', { name: 'Register' });
+    const buttonRegister = screen.getByRole('button', { name: I18N_KEYS.buttonRegister });
     fireEvent.click(buttonRegister);
 
-    await waitFor(() => screen.getByRole('alert', { name: 'error' }));
+    await waitFor(() => screen.getByTestId('alert-error'));
 
-    expect(screen.getByRole('alert', { name: 'error' })).toBeInTheDocument();
+    expect(screen.getByTestId('alert-error')).toBeInTheDocument();
   });
 });

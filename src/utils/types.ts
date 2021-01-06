@@ -8,3 +8,7 @@ export interface User {
   password: string;
   passwordConfirmation: string;
 }
+
+export interface FunctionForTest {
+  mockFunction?: () => void;
+}

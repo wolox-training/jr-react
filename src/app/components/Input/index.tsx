@@ -23,7 +23,6 @@ function Input({ labelText, type = 'text', inputRef, name, errorMessage = '' }: 
         ref={inputRef}
         name={name}
         id={name}
-        aria-label={name}
         className={clsx('full-width', styles.input, { 'input-error': errorMessage })}
       />
       {errorMessage && (
