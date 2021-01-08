@@ -6,13 +6,11 @@ import { useForm } from 'react-hook-form';
 import Input from '~components/Input';
 import { emailRegex } from '~utils/inputValidations';
 import { AUTH_FIELDS } from '~constants/fields';
-import AlertMessage from '~components/AlertMessage';
 import { ContentForm, UserRegister } from '~utils/types';
-import { getErrorMessage } from '~utils/errors';
 
 import styles from './styles.module.scss';
 
-function RegisterForm({ onSubmit, statusApi }: ContentForm) {
+function RegisterForm({ onSubmit, request }: ContentForm) {
   const { register, handleSubmit, errors, formState, watch } = useForm<UserRegister>({
     mode: 'all'
   });
@@ -20,14 +18,10 @@ function RegisterForm({ onSubmit, statusApi }: ContentForm) {
   const validatePassword = (passwordConfirmation: string) =>
     passwordConfirmation === watch('password') ? true : 'FormValidations:passwordNotMatch';
 
-  const [state, loading, error] = statusApi;
+  const [, loading] = request;
   return (
     <>
       <form className={styles.body} onSubmit={handleSubmit(onSubmit)}>
-        {error?.problem && <AlertMessage type="error" message={getErrorMessage(error)} />}
-
-        {state && <AlertMessage type="success" message={i18next.t('Register:messageSuccess')} />}
-
         <Input
           labelText={i18next.t('Register:firstName')}
           name={AUTH_FIELDS.firstName}

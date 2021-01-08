@@ -25,7 +25,7 @@ const USER_TEST = {
 
 const mockOnSubmit = jest.fn();
 
-const mockStatusApi: LazyRequest<SuccessResponse, ErrorResponse, UserRegister> = [
+const mockRequest: LazyRequest<SuccessResponse, ErrorResponse, UserRegister> = [
   null,
   false,
   null,
@@ -34,12 +34,12 @@ const mockStatusApi: LazyRequest<SuccessResponse, ErrorResponse, UserRegister> =
 
 describe('Register Form Component', () => {
   it('Renders successfully', () => {
-    const { asFragment } = render(<RegisterForm onSubmit={mockOnSubmit} statusApi={[...mockStatusApi]} />);
+    const { asFragment } = render(<RegisterForm onSubmit={mockOnSubmit} request={[...mockRequest]} />);
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('If the form is not completed correctly, it is not sent', async () => {
-    render(<RegisterForm onSubmit={mockOnSubmit} statusApi={[...mockStatusApi]} />);
+    render(<RegisterForm onSubmit={mockOnSubmit} request={[...mockRequest]} />);
 
     const buttonRegister = screen.getByRole('button', { name: I18N_KEYS.buttonRegister });
 
@@ -53,7 +53,7 @@ describe('Register Form Component', () => {
   });
 
   test('Successful registration', async () => {
-    render(<RegisterForm onSubmit={mockOnSubmit} statusApi={[...mockStatusApi]} />);
+    render(<RegisterForm onSubmit={mockOnSubmit} request={[...mockRequest]} />);
     await waitFor(() => {
       setInputByLabelText(I18N_KEYS.firstName, USER_TEST.firstName);
       setInputByLabelText(I18N_KEYS.lastName, USER_TEST.lastName);

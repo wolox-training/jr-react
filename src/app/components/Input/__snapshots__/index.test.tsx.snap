@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Component Alert Renders successfully 1`] = `
+exports[`Input Component Renders successfully 1`] = `
 <DocumentFragment>
   <div
     class="row wrap contentInput"

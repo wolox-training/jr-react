@@ -1,3 +1,4 @@
+import { ApiResponse } from 'apisauce';
 import { Error } from '~app/hooks/useRequest';
 
 export type Nullable<T> = T | null;
@@ -29,5 +30,7 @@ export type LazyRequest<D, E, P> = [Nullable<D> | unknown, boolean, Nullable<Err
 
 export interface ContentForm {
   onSubmit: (data: UserRegister) => void;
-  statusApi: LazyRequest<SuccessResponse, ErrorResponse, UserRegister>;
+  request: LazyRequest<SuccessResponse, ErrorResponse, UserRegister>;
 }
+
+export type Service<Data, Error> = (data: Data) => Promise<ApiResponse<unknown, Error>>;

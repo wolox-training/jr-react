@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Screen Register Renders successfully 1`] = `
+exports[`Register Form Component Renders successfully 1`] = `
 <DocumentFragment>
   <form
     class="body"

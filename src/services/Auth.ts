@@ -1,4 +1,4 @@
 import api from '~config/api';
-import { ErrorResponse, UserRegister } from '~utils/types';
+import { ErrorResponse, SuccessResponse, UserRegister } from '~utils/types';
 
-export const apiRegister = (data: UserRegister) => api.post<unknown, ErrorResponse>('/users', data);
+export const apiRegister = (data: UserRegister) => api.post<SuccessResponse, ErrorResponse>('/users', data);
