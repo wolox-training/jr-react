@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component Alert Renders successfully 1`] = `
+<DocumentFragment>
+  <div
+    class="row wrap contentInput"
+  >
+    <label
+      class="label"
+      for="firstName"
+    >
+      Nombre
+    </label>
+    <input
+      class="full-width input"
+      id="firstName"
+      name="firstName"
+      type="text"
+    />
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Screen Register Renders successfully 1`] = `
+<DocumentFragment>
+  <form
+    class="body"
+  >
+    <div
+      class="row wrap contentInput"
+    >
+      <label
+        class="label"
+        for="firstName"
+      >
+        Register:firstName
+      </label>
+      <input
+        class="full-width input"
+        id="firstName"
+        name="firstName"
+        type="text"
+      />
+    </div>
+    <div
+      class="row wrap contentInput"
+    >
+      <label
+        class="label"
+        for="lastName"
+      >
+        Register:lastName
+      </label>
+      <input
+        class="full-width input"
+        id="lastName"
+        name="lastName"
+        type="text"
+      />
+    </div>
+    <div
+      class="row wrap contentInput"
+    >
+      <label
+        class="label"
+        for="email"
+      >
+        FormAuth:email
+      </label>
+      <input
+        class="full-width input"
+        id="email"
+        name="email"
+        type="email"
+      />
+    </div>
+    <div
+      class="row wrap contentInput"
+    >
+      <label
+        class="label"
+        for="password"
+      >
+        FormAuth:password
+      </label>
+      <input
+        class="full-width input"
+        id="password"
+        name="password"
+        type="password"
+      />
+    </div>
+    <div
+      class="row wrap contentInput"
+    >
+      <label
+        class="label"
+        for="passwordConfirmation"
+      >
+        Register:passwordConfirmation
+      </label>
+      <input
+        class="full-width input"
+        id="passwordConfirmation"
+        name="passwordConfirmation"
+        type="password"
+      />
+    </div>
+    <button
+      class="button btn-green"
+      type="submit"
+    >
+      FormAuth:btnRegister
+    </button>
+  </form>
+  <div
+    class="footer"
+  >
+    <button
+      class="button btn-white"
+      type="button"
+    >
+      FormAuth:btnLogin
+    </button>
+  </div>
+</DocumentFragment>
+`;

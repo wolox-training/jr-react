@@ -1,5 +1,6 @@
 import { Error } from '~app/hooks/useRequest';
-import { ErrorResponse } from '~services/Auth';
+
+import { ErrorResponse } from './types';
 
 export const getErrorMessage = (error: Error<ErrorResponse>) => {
   if (!error?.problem) {
