@@ -32,7 +32,7 @@ const mockStatusApi: LazyRequest<SuccessResponse, ErrorResponse, UserRegister> =
   value => value
 ];
 
-describe('Screen Register', () => {
+describe('Register Form Component', () => {
   it('Renders successfully', () => {
     const { asFragment } = render(<RegisterForm onSubmit={mockOnSubmit} statusApi={[...mockStatusApi]} />);
     expect(asFragment()).toMatchSnapshot();
