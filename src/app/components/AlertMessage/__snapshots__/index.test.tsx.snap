@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Alert Component Renders successfully 1`] = `
+<DocumentFragment>
+  <div
+    class="alertMessage success"
+    data-testid="alert-success"
+    role="alert"
+  >
+    <h2
+      class="title"
+    >
+      AlertMessage:titleSuccess
+    </h2>
+    Registro exitoso
+  </div>
+</DocumentFragment>
+`;
