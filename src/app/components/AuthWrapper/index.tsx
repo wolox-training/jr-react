@@ -22,11 +22,13 @@ function AuthWrapper({ component: RenderComponent, service }: Props) {
 
   const [state, , error, sendRequest] = request;
 
-  const onSubmit = (data: UserRegister) => {
-    data.locale = i18next.language;
+  function onSubmit(data: UserRegister) {
     sendRequest(data);
-    console.log(data);
-  };
+  }
+
+  if (state) {
+    console.log(state);
+  }
 
   return (
     <div className={styles.contentPage}>

@@ -34,3 +34,15 @@ export interface ContentForm {
 }
 
 export type Service<Data, Error> = (data: Data) => Promise<ApiResponse<unknown, Error>>;
+
+export interface Login{
+    email: string;
+    password: string;
+}
+
+export const mockRequest: LazyRequest<SuccessResponse, ErrorResponse, UserRegister> = [
+  null,
+  false,
+  null,
+  value => value
+];

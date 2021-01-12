@@ -20,7 +20,11 @@ const api = create({
    * baseURL: process.env.API_BASE_URL,
    */
   baseURL,
-  timeout: 15000
+  timeout: 15000,
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  }
 });
 
 // eslint-disable-next-line no-unused-vars, prettier/prettier, @typescript-eslint/no-unused-vars

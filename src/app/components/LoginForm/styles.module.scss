@@ -1,0 +1,15 @@
+@import 'variables/colors';
+
+.body {
+  margin: 15px 0;
+}
+
+.footer {
+  border-top: 1px solid $dark-gray;
+  padding-top: 15px;
+  text-align: center;
+
+  .language {
+    margin-top: 15px;
+  }
+}
