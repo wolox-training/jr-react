@@ -34,7 +34,7 @@ function AuthWrapper({ component: RenderComponent, service }: Props) {
         <img
           className={`${styles.imgLogo} full-width`}
           src={imageWolox}
-          alt={i18next.t('AuthWrapper:logoAlt') as string}
+          alt={i18next.t('AltImages:logo') as string}
         />
       </div>
 

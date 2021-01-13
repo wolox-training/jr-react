@@ -27,3 +27,7 @@ i18next.addResources('en', 'FormValidations', {
   errorRequired: 'This field is required',
   passwordNotMatch: 'Passwords do not match'
 });
+
+i18next.addResources('es', 'AltImages', {
+  logo: 'logo Wolox'
+});

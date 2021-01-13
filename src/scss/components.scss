@@ -51,3 +51,15 @@
     cursor: not-allowed;
   }
 }
+
+.shadow{
+  box-shadow: 0px 0px 10px 5px $shadow-color;
+}
+
+.text-right{
+  text-align: right;
+}
+
+.text-center{
+  text-align: center;
+}
