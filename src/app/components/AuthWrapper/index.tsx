@@ -1,8 +1,8 @@
 import React from 'react';
 import i18next from 'i18next';
 
-import { useLazyRequest } from '~app/hooks/useRequest';
-import { ContentForm, ErrorResponse, Service, UserRegister } from '~utils/types';
+import { Success, useLazyRequest } from '~app/hooks/useRequest';
+import { ContentForm, ErrorResponse, Service, SuccessResponse, UserRegister } from '~utils/types';
 import AlertMessage from '~components/AlertMessage';
 import { getErrorMessage } from '~utils/errors';
 
@@ -12,22 +12,20 @@ import styles from './styles.module.scss';
 
 interface Props {
   component: React.FC<ContentForm>;
-  service: Service<any, ErrorResponse>;
+  service: Service<UserRegister, ErrorResponse>;
+  success?: Success<SuccessResponse>;
 }
 
-function AuthWrapper({ component: RenderComponent, service }: Props) {
-  const request = useLazyRequest({
-    request: service
+function AuthWrapper({ component: RenderComponent, service, success }: Props) {
+  const request = useLazyRequest<UserRegister, SuccessResponse, ErrorResponse>({
+    request: service,
+    withPostSuccess: success
   });
 
   const [state, , error, sendRequest] = request;
 
   function onSubmit(data: UserRegister) {
     sendRequest(data);
-  }
-
-  if (state) {
-    console.log(state);
   }
 
   return (

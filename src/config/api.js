@@ -46,6 +46,9 @@ export const apiSetup = dispatch => {
 };
 
 api.addResponseTransform(response => {
+  if(response.headers){
+    response.data.headers = response.headers;
+  }
   if (response.data) {
     response.data = response.data ? deserializer.serialize(response.data) : null;
   }
