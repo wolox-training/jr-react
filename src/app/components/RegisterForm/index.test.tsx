@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
 import { setInputByLabelText } from '~utils/testUtils';
-import { ErrorResponse, LazyRequest, SuccessResponse, UserRegister } from '~utils/types';
+import { ErrorResponse, LazyRequest, mockRequest, SuccessResponse, UserRegister } from '~utils/types';
 
 import RegisterForm from './index';
 
@@ -24,13 +24,6 @@ const USER_TEST = {
 };
 
 const mockOnSubmit = jest.fn();
-
-const mockRequest: LazyRequest<SuccessResponse, ErrorResponse, UserRegister> = [
-  null,
-  false,
-  null,
-  value => value
-];
 
 describe('Register Form Component', () => {
   it('Renders successfully', () => {

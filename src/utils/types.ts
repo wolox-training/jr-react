@@ -17,6 +17,9 @@ export interface UserRegister extends InfoUser{
 
 export interface SuccessResponse extends InfoUser{
   id: number;
+  headers: {
+    accessToken?: string;
+  };
 }
 export interface ErrorResponse {
   error: string;
@@ -33,4 +36,16 @@ export interface ContentForm {
   request: LazyRequest<SuccessResponse, ErrorResponse, UserRegister>;
 }
 
-export type Service<Data, Error> = (data: Data) => Promise<ApiResponse<unknown, Error>>;
+export type Service<Data, Error> = (data: Data) => Promise<ApiResponse<SuccessResponse, Error>>;
+
+export interface Login{
+    email: string;
+    password: string;
+}
+
+export const mockRequest: LazyRequest<SuccessResponse, ErrorResponse, UserRegister> = [
+  null,
+  false,
+  null,
+  value => value
+];

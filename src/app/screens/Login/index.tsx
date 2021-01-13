@@ -1,14 +1,18 @@
 import React from 'react';
 
-import NavBar from '~components/NavBar';
+import { Success } from '~app/hooks/useRequest';
+import AuthWrapper from '~components/AuthWrapper';
+import LoginForm from '~components/LoginForm';
+import { apiLogin } from '~services/Auth';
+import { SuccessResponse } from '~utils/types';
 
 function Login() {
-  return (
-    <div>
-      <NavBar />
-      <h1>This is login</h1>
-    </div>
-  );
+  const success: Success<SuccessResponse> = data => {
+    if (data) {
+      console.log(data.headers.accessToken);
+    }
+  };
+  return <AuthWrapper service={apiLogin} component={LoginForm} success={success} />;
 }
 
 export default Login;
