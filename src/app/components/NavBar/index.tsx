@@ -8,7 +8,7 @@ import styles from './styles.module.scss';
 function NavBar() {
   return (
     <div className={`row middle shadow ${styles.contentNavbar}`}>
-      <div className="item-1 text-center">
+      <div className="item-1 text-left">
         <img src={imageWolox} alt={i18next.t('AltImages:logo') as string} className={styles.logo} />
       </div>
       <div className={`item-1 text-right ${styles.optionsNav}`}>
