@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Register from '~screens/Register';
+import Router from '~components/Router';
 
 import '../scss/application.scss';
 
 function App() {
-  return <Register />;
+  return <Router />;
 }
 
 export default App;
