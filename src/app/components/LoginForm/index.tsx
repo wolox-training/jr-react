@@ -6,16 +6,16 @@ import { useForm } from 'react-hook-form';
 import Input from '~components/Input';
 import { emailRegex } from '~utils/inputValidations';
 import { AUTH_FIELDS } from '~constants/fields';
-import { ContentForm, UserRegister } from '~utils/types';
+import { ContentForm } from '~utils/types';
+import { LoginBody } from '~screens/Login/types';
 
 import styles from './styles.module.scss';
 
-function LoginForm({ onSubmit, request }: ContentForm) {
-  const { register, handleSubmit, errors, formState } = useForm<UserRegister>({
+function LoginForm({ onSubmit, isLoading }: ContentForm) {
+  const { register, handleSubmit, errors, formState } = useForm<LoginBody>({
     mode: 'all'
   });
 
-  const [, loading] = request;
   return (
     <>
       <form className={styles.body} onSubmit={handleSubmit(onSubmit)}>
@@ -42,7 +42,7 @@ function LoginForm({ onSubmit, request }: ContentForm) {
           errorMessage={errors.password?.message}
         />
 
-        <button type="submit" disabled={!formState.isValid || loading} className="button btn-green">
+        <button type="submit" disabled={!formState.isValid || isLoading} className="button btn-green">
           {i18next.t('FormAuth:btnLogin')}
         </button>
       </form>

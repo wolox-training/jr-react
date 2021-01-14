@@ -10,7 +10,7 @@ import { ContentForm, UserRegister } from '~utils/types';
 
 import styles from './styles.module.scss';
 
-function RegisterForm({ onSubmit, request }: ContentForm) {
+function RegisterForm({ onSubmit, isLoading }: ContentForm) {
   const { register, handleSubmit, errors, formState, watch } = useForm<UserRegister>({
     mode: 'all'
   });
@@ -18,7 +18,6 @@ function RegisterForm({ onSubmit, request }: ContentForm) {
   const validatePassword = (passwordConfirmation: string) =>
     passwordConfirmation === watch('password') ? true : 'FormValidations:passwordNotMatch';
 
-  const [, loading] = request;
   return (
     <>
       <form className={styles.body} onSubmit={handleSubmit(onSubmit)}>
@@ -72,7 +71,7 @@ function RegisterForm({ onSubmit, request }: ContentForm) {
           errorMessage={errors.passwordConfirmation?.message}
         />
 
-        <button type="submit" disabled={!formState.isValid || loading} className="button btn-green">
+        <button type="submit" disabled={!formState.isValid || isLoading} className="button btn-green">
           {i18next.t('FormAuth:btnRegister')}
         </button>
       </form>

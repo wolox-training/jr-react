@@ -1,6 +1,6 @@
 module.exports = {
-  extends: ['wolox-react', 'wolox-typescript'],
-  parser: '@typescript-eslint/parser',
+  extends: ['wolox-react', '@wolox/eslint-config-typescript'],
+  parser: "@typescript-eslint/parser",
   settings: {
     'react': {
       'version': 'detect'

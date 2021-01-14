@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
 import { setInputByLabelText } from '~utils/testUtils';
-import { mockRequest } from '~utils/types';
 
 import LoginForm from './index';
 
@@ -20,12 +19,12 @@ const USER_TEST = {
 const mockOnSubmit = jest.fn();
 describe('Login Form Component', () => {
   it('Renders successfully', () => {
-    const { asFragment } = render(<LoginForm onSubmit={mockOnSubmit} request={[...mockRequest]} />);
+    const { asFragment } = render(<LoginForm onSubmit={mockOnSubmit} isLoading={false} />);
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('If the form is not completed correctly, it is not sent', async () => {
-    render(<LoginForm onSubmit={mockOnSubmit} request={[...mockRequest]} />);
+    render(<LoginForm onSubmit={mockOnSubmit} isLoading={false} />);
 
     const buttonLogin = screen.getByRole('button', { name: I18N_KEYS.buttonLogin });
 
@@ -39,7 +38,7 @@ describe('Login Form Component', () => {
   });
 
   test('Successful login', async () => {
-    render(<LoginForm onSubmit={mockOnSubmit} request={[...mockRequest]} />);
+    render(<LoginForm onSubmit={mockOnSubmit} isLoading={false} />);
     await waitFor(() => {
       setInputByLabelText(I18N_KEYS.email, USER_TEST.email);
       setInputByLabelText(I18N_KEYS.password, USER_TEST.password);

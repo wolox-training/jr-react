@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
 import { setInputByLabelText } from '~utils/testUtils';
-import { ErrorResponse, LazyRequest, mockRequest, SuccessResponse, UserRegister } from '~utils/types';
 
 import RegisterForm from './index';
 
@@ -27,12 +26,12 @@ const mockOnSubmit = jest.fn();
 
 describe('Register Form Component', () => {
   it('Renders successfully', () => {
-    const { asFragment } = render(<RegisterForm onSubmit={mockOnSubmit} request={[...mockRequest]} />);
+    const { asFragment } = render(<RegisterForm onSubmit={mockOnSubmit} isLoading={false} />);
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('If the form is not completed correctly, it is not sent', async () => {
-    render(<RegisterForm onSubmit={mockOnSubmit} request={[...mockRequest]} />);
+    render(<RegisterForm onSubmit={mockOnSubmit} isLoading={false} />);
 
     const buttonRegister = screen.getByRole('button', { name: I18N_KEYS.buttonRegister });
 
@@ -46,7 +45,7 @@ describe('Register Form Component', () => {
   });
 
   test('Successful registration', async () => {
-    render(<RegisterForm onSubmit={mockOnSubmit} request={[...mockRequest]} />);
+    render(<RegisterForm onSubmit={mockOnSubmit} isLoading={false} />);
     await waitFor(() => {
       setInputByLabelText(I18N_KEYS.firstName, USER_TEST.firstName);
       setInputByLabelText(I18N_KEYS.lastName, USER_TEST.lastName);

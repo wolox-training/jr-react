@@ -1,12 +1,17 @@
 import i18next from 'i18next';
 
 import api from '~config/api';
-import { ErrorResponse, SuccessResponse, UserRegister } from '~utils/types';
+import { LoginBody, LoginResponse } from '~screens/Login/types';
+import { RegisterBody, RegisterResponse } from '~screens/Register/types';
+import { ErrorResponse } from '~utils/types';
 
-export const apiRegister = (data: UserRegister) => {
+export const apiRegister = (data: RegisterBody) => {
   data.locale = i18next.language;
-  return api.post<SuccessResponse, ErrorResponse>('/users', data);
+
+  // TODO: Type this exact type (SuccessResponse)
+  return api.post<RegisterResponse, ErrorResponse>('/users', data);
 };
 
-export const apiLogin = (data: UserRegister) =>
-  api.post<SuccessResponse, ErrorResponse>('/users/sign_in', JSON.stringify(data));
+export const apiLogin = (data: LoginBody) =>
+// TODO: Type this exact type (SuccessResponse)
+  api.post<LoginResponse, ErrorResponse>('/users/sign_in', data);

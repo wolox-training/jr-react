@@ -1,18 +1,19 @@
+import { ApiResponse } from 'apisauce';
 import React from 'react';
 
-import { Success } from '~app/hooks/useRequest';
 import AuthWrapper from '~components/AuthWrapper';
 import LoginForm from '~components/LoginForm';
 import { apiLogin } from '~services/Auth';
-import { SuccessResponse } from '~utils/types';
+import { ErrorResponse } from '~utils/types';
+import { LoginResponse } from './types';
 
 function Login() {
-  const success: Success<SuccessResponse> = data => {
-    if (data) {
-      console.log(data.headers.accessToken);
+  const handleSuccess = (data: ApiResponse<Partial<LoginResponse>, ErrorResponse>) => {
+    if (data && data.ok) {
+      console.log(data);
     }
   };
-  return <AuthWrapper service={apiLogin} component={LoginForm} success={success} />;
+  return <AuthWrapper service={apiLogin} component={LoginForm} onSuccess={handleSuccess} />;
 }
 
 export default Login;
