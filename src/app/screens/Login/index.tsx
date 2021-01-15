@@ -16,7 +16,7 @@ function Login() {
   const success: Success<SuccessResponse> = data => {
     if (data && data.headers.accessToken) {
       localStorage.setValue(KEYS.token, data.headers.accessToken);
-      history.replace(PATHS.home);
+      history.replace(PATHS.principal);
     }
   };
 

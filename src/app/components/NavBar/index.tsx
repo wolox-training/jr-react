@@ -15,7 +15,7 @@ function NavBar() {
 
   const logout = () => {
     localStorage.removeValue(KEYS.token);
-    history.replace(PATHS.login);
+    history.replace(PATHS.principal);
   };
 
   return (
