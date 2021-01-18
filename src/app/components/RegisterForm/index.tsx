@@ -6,21 +6,26 @@ import { useForm } from 'react-hook-form';
 import Input from '~components/Input';
 import { emailRegex } from '~utils/inputValidations';
 import { AUTH_FIELDS } from '~constants/fields';
-import { ContentForm, UserRegister } from '~utils/types';
+import { ContentForm } from '~utils/types';
+import { RegisterBody } from '~screens/Register/types';
 
 import styles from './styles.module.scss';
 
 function RegisterForm({ onSubmit, isLoading }: ContentForm) {
-  const { register, handleSubmit, errors, formState, watch } = useForm<UserRegister>({
+  const { register, handleSubmit, errors, formState, watch } = useForm<RegisterBody>({
     mode: 'all'
   });
 
   const validatePassword = (passwordConfirmation: string) =>
     passwordConfirmation === watch('password') ? true : 'FormValidations:passwordNotMatch';
 
+  const submit = handleSubmit(data => {
+    onSubmit(data);
+  });
+
   return (
     <>
-      <form className={styles.body} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.body} onSubmit={submit}>
         <Input
           labelText={i18next.t('Register:firstName')}
           name={AUTH_FIELDS.firstName}

@@ -42,6 +42,6 @@ describe('Login Form Component', () => {
     const buttonLogin = screen.getByRole('button', { name: I18N_KEYS.buttonLogin });
     fireEvent.click(buttonLogin);
 
-    await waitFor(() => expect(mockOnSubmit).toHaveBeenCalled());
+    await waitFor(() => expect(mockOnSubmit).toHaveBeenCalledWith({ ...USER_TEST }));
   });
 });

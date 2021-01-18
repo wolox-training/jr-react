@@ -4,8 +4,8 @@ import { ApiResponse } from 'apisauce';
 
 import { useLazyRequest } from '~app/hooks/useRequest';
 import { ContentForm, ErrorResponse } from '~utils/types';
-import { LoginBody, LoginResponse } from '~screens/Login/types';
-import { RegisterBody, RegisterResponse } from '~screens/Register/types';
+import { LoginBody } from '~screens/Login/types';
+import { RegisterBody } from '~screens/Register/types';
 import AlertMessage from '~components/AlertMessage';
 import { getErrorMessage } from '~utils/errors';
 

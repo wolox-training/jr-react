@@ -1,3 +1,6 @@
+import { LoginBody } from '~screens/Login/types';
+import { RegisterBody } from '~screens/Register/types';
+
 export type Nullable<T> = T | null;
 
 export interface InfoUser {
@@ -6,11 +9,6 @@ export interface InfoUser {
   firstName: string;
   lastName: string;
   locale: string;
-}
-
-export interface UserRegister extends InfoUser {
-  password: string;
-  passwordConfirmation: string;
 }
 
 export interface ErrorResponse {
@@ -22,7 +20,7 @@ export interface ErrorResponse {
 }
 
 export interface ContentForm {
-  onSubmit: (data: UserRegister) => void;
+  onSubmit: (data: LoginBody | RegisterBody) => void;
   isLoading: boolean;
 }
 
