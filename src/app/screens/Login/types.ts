@@ -1,10 +1,10 @@
 import { InfoUser } from '~utils/types';
 
 export interface LoginResponse {
-  data: { 
+  data: {
     allowPasswordChange: boolean;
     provider: string;
-    uid: string; 
+    uid: string;
   } & InfoUser;
 }
 

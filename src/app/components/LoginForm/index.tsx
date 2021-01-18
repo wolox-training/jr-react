@@ -41,7 +41,6 @@ function LoginForm({ onSubmit, isLoading }: ContentForm) {
           type="password"
           errorMessage={errors.password?.message}
         />
-
         <button type="submit" disabled={!formState.isValid || isLoading} className="button btn-green">
           {i18next.t('FormAuth:btnLogin')}
         </button>

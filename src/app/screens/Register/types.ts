@@ -1,4 +1,3 @@
-
 import { InfoUser } from '~utils/types';
 
 export type RegisterResponse = InfoUser;

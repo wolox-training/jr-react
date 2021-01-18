@@ -1,5 +1,6 @@
 import React from 'react';
 import i18next from 'i18next';
+import { ApiResponse } from 'apisauce';
 
 import { useLazyRequest } from '~app/hooks/useRequest';
 import { ContentForm, ErrorResponse } from '~utils/types';
@@ -11,7 +12,6 @@ import { getErrorMessage } from '~utils/errors';
 import imageWolox from '../../assets/wolox.svg';
 
 import styles from './styles.module.scss';
-import { ApiResponse } from 'apisauce';
 
 interface Props {
   component: React.FC<ContentForm>;
