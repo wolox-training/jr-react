@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import React from 'react';
 import i18next from 'i18next';
 import { useForm } from 'react-hook-form';

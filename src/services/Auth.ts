@@ -13,5 +13,5 @@ export const apiRegister = (data: RegisterBody) => {
 };
 
 export const apiLogin = (data: LoginBody) =>
-// TODO: Type this exact type (SuccessResponse)
+  // TODO: Type this exact type (SuccessResponse)
   api.post<LoginResponse, ErrorResponse>('/users/sign_in', data);
