@@ -4,6 +4,7 @@ exports[`Register Form Component Renders successfully 1`] = `
 <DocumentFragment>
   <form
     class="body"
+    name="registerForm"
   >
     <div
       class="row wrap contentInput"

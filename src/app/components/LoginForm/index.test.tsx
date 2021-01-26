@@ -39,9 +39,11 @@ describe('Login Form Component', () => {
     setInputByLabelText(I18N_KEYS.email, USER_TEST.email);
     setInputByLabelText(I18N_KEYS.password, USER_TEST.password);
 
+    const form = screen.getByRole('form');
     const buttonLogin = screen.getByRole('button', { name: I18N_KEYS.buttonLogin });
     fireEvent.click(buttonLogin);
 
-    await waitFor(() => expect(mockOnSubmit).toHaveBeenCalledWith({ ...USER_TEST }));
+    await waitFor(() => expect(form).toHaveFormValues({ ...USER_TEST }));
+    expect(mockOnSubmit).toHaveBeenCalled();
   });
 });

@@ -34,32 +34,27 @@ describe('Register Form Component', () => {
     render(<RegisterForm onSubmit={mockOnSubmit} isLoading={false} />);
 
     const buttonRegister = screen.getByRole('button', { name: I18N_KEYS.buttonRegister });
-
-    await waitFor(() => {
-      fireEvent.click(buttonRegister);
-    });
+    fireEvent.click(buttonRegister);
 
     const alertErrorShow = 5;
-    expect(await screen.findAllByRole('alert')).toHaveLength(alertErrorShow);
+    await waitFor(async() =>  expect(await screen.findAllByRole('alert')).toHaveLength(alertErrorShow));
     expect(mockOnSubmit).not.toBeCalled();
   });
 
   test('Successful registration', async () => {
     render(<RegisterForm onSubmit={mockOnSubmit} isLoading={false} />);
-    await waitFor(() => {
-      setInputByLabelText(I18N_KEYS.firstName, USER_TEST.firstName);
-      setInputByLabelText(I18N_KEYS.lastName, USER_TEST.lastName);
-      setInputByLabelText(I18N_KEYS.email, USER_TEST.email);
-      setInputByLabelText(I18N_KEYS.password, USER_TEST.password);
-      setInputByLabelText(I18N_KEYS.passwordConfirmation, USER_TEST.passwordConfirmation);
-    });
-
+    
+    setInputByLabelText(I18N_KEYS.firstName, USER_TEST.firstName);
+    setInputByLabelText(I18N_KEYS.lastName, USER_TEST.lastName);
+    setInputByLabelText(I18N_KEYS.email, USER_TEST.email);
+    setInputByLabelText(I18N_KEYS.password, USER_TEST.password);
+    setInputByLabelText(I18N_KEYS.passwordConfirmation, USER_TEST.passwordConfirmation);
+  
+    const form = screen.getByRole('form');
     const buttonRegister = screen.getByRole('button', { name: I18N_KEYS.buttonRegister });
-
-    await waitFor(() => {
-      fireEvent.click(buttonRegister);
-    });
-
+    fireEvent.click(buttonRegister);
+    
+    await waitFor(() => expect(form).toHaveFormValues({ ...USER_TEST }));
     expect(mockOnSubmit).toHaveBeenCalled();
   });
 });

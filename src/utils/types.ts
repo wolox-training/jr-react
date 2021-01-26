@@ -1,3 +1,6 @@
+import { LoginBody } from "~screens/Login/types";
+import { RegisterBody } from "~screens/Register/types";
+
 export type Nullable<T> = T | null;
 
 export interface InfoUser {
@@ -17,7 +20,7 @@ export interface ErrorResponse {
 }
 
 export interface ContentForm {
-  onSubmit: (data: Record<string, any>) => void;
+  onSubmit: (data: LoginBody | RegisterBody) => void;
   isLoading: boolean;
 }
 

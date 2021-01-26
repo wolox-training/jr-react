@@ -18,13 +18,9 @@ function RegisterForm({ onSubmit, isLoading }: ContentForm) {
   const validatePassword = (passwordConfirmation: string) =>
     passwordConfirmation === watch('password') ? true : 'FormValidations:passwordNotMatch';
 
-  const submit = handleSubmit(data => {
-    onSubmit(data);
-  });
-
   return (
     <>
-      <form className={styles.body} onSubmit={submit}>
+      <form className={styles.body} onSubmit={handleSubmit(onSubmit)} name="registerForm">
         <Input
           labelText={i18next.t('Register:firstName')}
           name={AUTH_FIELDS.firstName}

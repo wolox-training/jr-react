@@ -25,7 +25,7 @@ function AuthWrapper({ component: RenderComponent, service, onSuccess }: Props) 
     withPostFetch: onSuccess
   });
 
-  function onSubmit(data: LoginBody | RegisterBody) {
+  const onSubmit = (data: LoginBody | RegisterBody) => {
     sendRequest(data);
   }
 

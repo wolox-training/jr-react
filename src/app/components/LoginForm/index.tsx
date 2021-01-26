@@ -15,13 +15,9 @@ function LoginForm({ onSubmit, isLoading }: ContentForm) {
     mode: 'all'
   });
 
-  const submit = handleSubmit(data => {
-    onSubmit(data);
-  });
-
   return (
     <>
-      <form className={styles.body} onSubmit={submit}>
+      <form className={styles.body} onSubmit={handleSubmit(onSubmit)} name="loginForm">
         <Input
           labelText={i18next.t('FormAuth:email')}
           name={AUTH_FIELDS.email}
