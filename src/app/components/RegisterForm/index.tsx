@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import React from 'react';
 import i18next from 'i18next';
 import { useForm } from 'react-hook-form';
@@ -6,22 +5,22 @@ import { useForm } from 'react-hook-form';
 import Input from '~components/Input';
 import { emailRegex } from '~utils/inputValidations';
 import { AUTH_FIELDS } from '~constants/fields';
-import { ContentForm, UserRegister } from '~utils/types';
+import { ContentForm } from '~utils/types';
+import { RegisterBody } from '~screens/Register/types';
 
 import styles from './styles.module.scss';
 
-function RegisterForm({ onSubmit, request }: ContentForm) {
-  const { register, handleSubmit, errors, formState, watch } = useForm<UserRegister>({
+function RegisterForm({ onSubmit, isLoading }: ContentForm) {
+  const { register, handleSubmit, errors, formState, watch } = useForm<RegisterBody>({
     mode: 'all'
   });
 
   const validatePassword = (passwordConfirmation: string) =>
     passwordConfirmation === watch('password') ? true : 'FormValidations:passwordNotMatch';
 
-  const [, loading] = request;
   return (
     <>
-      <form className={styles.body} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.body} onSubmit={handleSubmit(onSubmit)} name="registerForm">
         <Input
           labelText={i18next.t('Register:firstName')}
           name={AUTH_FIELDS.firstName}
@@ -72,7 +71,7 @@ function RegisterForm({ onSubmit, request }: ContentForm) {
           errorMessage={errors.passwordConfirmation?.message}
         />
 
-        <button type="submit" disabled={!formState.isValid || loading} className="button btn-green">
+        <button type="submit" disabled={!formState.isValid || isLoading} className="button btn-green">
           {i18next.t('FormAuth:btnRegister')}
         </button>
       </form>
