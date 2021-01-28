@@ -1,4 +1,4 @@
 export const PATHS = {
-  login: '/',
+  principal: '/',
   signUp: '/sign_up'
 };

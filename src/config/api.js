@@ -49,6 +49,9 @@ api.addResponseTransform(response => {
   if (response.data) {
     response.data = response.data ? deserializer.serialize(response.data) : null;
   }
+  if (response.headers) {
+    response.headers = response.headers ? deserializer.serialize(response.headers) : null;
+  }
 });
 
 // Request transform to serialize the body to camel_case backend structure

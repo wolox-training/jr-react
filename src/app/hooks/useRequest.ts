@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { ApiErrorResponse, ApiOkResponse, PROBLEM_CODE, ApiResponse } from 'apisauce';
 
 import { Nullable } from '~utils/types';
+import { saveTokenLocalStorage } from '~utils/auth';
 
 export type Error<E> = { problem: PROBLEM_CODE; errorData?: E };
 type Request<P, D, E> = (params: P) => Promise<ApiResponse<D, E>>;
@@ -16,6 +17,7 @@ interface AsyncRequestHookParams<P, D, E> {
   initialState?: D | null;
   withPostFetch?: PostFetch<D, E>;
   transformResponse?: (response: D | E) => any;
+  saveToken?: boolean;
 }
 
 interface AsyncRequestHookParamsWithPayload<P, D, E> extends AsyncRequestHookParams<P, D, E> {
@@ -56,12 +58,12 @@ export const useLazyRequest = <P, D, E>({
   withPostFailure,
   initialState = null,
   withPostFetch,
-  transformResponse = response => response
+  transformResponse = response => response,
+  saveToken = false
 }: AsyncRequestHookParams<P, D, E>): [Nullable<D>, boolean, Nullable<Error<E>>, (params: P) => void] => {
   const [state, setState] = useState(initialState);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Nullable<Error<E>>>(null);
-
   const sendRequest = useCallback(
     values => {
       executeAsyncRequest({
@@ -83,6 +85,9 @@ export const useLazyRequest = <P, D, E>({
         },
         onPostFetch: response => {
           setLoading(false);
+          if(saveToken && response.headers?.accessToken){
+            saveTokenLocalStorage(response.headers.accessToken);
+          }
           if (response.data) {
             withPostFetch?.(transformResponse(response.data));
           }
