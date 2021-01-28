@@ -1,8 +1,11 @@
 import React from 'react';
 import i18next from 'i18next';
+import { ApiResponse } from 'apisauce';
 
-import { Success, useLazyRequest } from '~app/hooks/useRequest';
-import { ContentForm, ErrorResponse, Service, SuccessResponse, UserRegister } from '~utils/types';
+import { useLazyRequest } from '~app/hooks/useRequest';
+import { ContentForm, ErrorResponse } from '~utils/types';
+import { LoginBody } from '~screens/Login/types';
+import { RegisterBody } from '~screens/Register/types';
 import AlertMessage from '~components/AlertMessage';
 import { getErrorMessage } from '~utils/errors';
 
@@ -12,19 +15,17 @@ import styles from './styles.module.scss';
 
 interface Props {
   component: React.FC<ContentForm>;
-  service: Service<UserRegister, ErrorResponse>;
-  success?: Success<SuccessResponse>;
+  service: (payload: any) => Promise<ApiResponse<any, ErrorResponse>>;
+  onSuccess: (response: ApiResponse<any, ErrorResponse>) => void;
 }
 
-function AuthWrapper({ component: RenderComponent, service, success }: Props) {
-  const request = useLazyRequest<UserRegister, SuccessResponse, ErrorResponse>({
+function AuthWrapper({ component: RenderComponent, service, onSuccess }: Props) {
+  const [state, isLoading, error, sendRequest] = useLazyRequest({
     request: service,
-    withPostSuccess: success
+    withPostFetch: onSuccess
   });
 
-  const [state, , error, sendRequest] = request;
-
-  function onSubmit(data: UserRegister) {
+  const onSubmit = (data: LoginBody | RegisterBody) => {
     sendRequest(data);
   }
 
@@ -37,12 +38,9 @@ function AuthWrapper({ component: RenderComponent, service, success }: Props) {
           alt={i18next.t('AltImages:logo') as string}
         />
       </div>
-
       {error?.problem && <AlertMessage type="error" message={getErrorMessage(error)} />}
-
       {state && <AlertMessage type="success" message={i18next.t('Register:messageSuccess')} />}
-
-      <RenderComponent onSubmit={onSubmit} request={request} />
+      <RenderComponent onSubmit={onSubmit} isLoading={isLoading} />
     </div>
   );
 }

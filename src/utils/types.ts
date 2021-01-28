@@ -1,26 +1,16 @@
-import { ApiResponse } from 'apisauce';
-import { Error } from '~app/hooks/useRequest';
+import { LoginBody } from "~screens/Login/types";
+import { RegisterBody } from "~screens/Register/types";
 
 export type Nullable<T> = T | null;
 
-interface InfoUser{
+export interface InfoUser {
+  id: number;
   email: string;
   firstName: string;
   lastName: string;
   locale: string;
 }
 
-export interface UserRegister extends InfoUser{
-  password: string;
-  passwordConfirmation: string;
-}
-
-export interface SuccessResponse extends InfoUser{
-  id: number;
-  headers: {
-    accessToken?: string;
-  };
-}
 export interface ErrorResponse {
   error: string;
   errors: {
@@ -29,23 +19,12 @@ export interface ErrorResponse {
   status: string;
 }
 
-export type LazyRequest<D, E, P> = [Nullable<D> | unknown, boolean, Nullable<Error<E>>, (params: P) => void];
-
 export interface ContentForm {
-  onSubmit: (data: UserRegister) => void;
-  request: LazyRequest<SuccessResponse, ErrorResponse, UserRegister>;
+  onSubmit: (data: LoginBody | RegisterBody) => void;
+  isLoading: boolean;
 }
 
-export type Service<Data, Error> = (data: Data) => Promise<ApiResponse<SuccessResponse, Error>>;
-
-export interface Login{
-    email: string;
-    password: string;
+export interface Login {
+  email: string;
+  password: string;
 }
-
-export const mockRequest: LazyRequest<SuccessResponse, ErrorResponse, UserRegister> = [
-  null,
-  false,
-  null,
-  value => value
-];

@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 
 type Hook = () => any;
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const TestHook = ({ hook }: { hook: Hook }) => {
   hook();
   return null;

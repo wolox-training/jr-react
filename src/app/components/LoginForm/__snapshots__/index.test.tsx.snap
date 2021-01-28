@@ -4,6 +4,7 @@ exports[`Login Form Component Renders successfully 1`] = `
 <DocumentFragment>
   <form
     class="body"
+    name="loginForm"
   >
     <div
       class="row wrap contentInput"
