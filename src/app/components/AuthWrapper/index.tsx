@@ -17,12 +17,14 @@ interface Props {
   component: React.FC<ContentForm>;
   service: (payload: any) => Promise<ApiResponse<any, ErrorResponse>>;
   onSuccess: (response: ApiResponse<any, ErrorResponse>) => void;
+  saveToken?: boolean;
 }
 
-function AuthWrapper({ component: RenderComponent, service, onSuccess }: Props) {
+function AuthWrapper({ component: RenderComponent, service, onSuccess, saveToken = false }: Props) {
   const [state, isLoading, error, sendRequest] = useLazyRequest({
     request: service,
-    withPostFetch: onSuccess
+    withPostFetch: onSuccess,
+    saveToken
   });
 
   const onSubmit = (data: LoginBody | RegisterBody) => {
