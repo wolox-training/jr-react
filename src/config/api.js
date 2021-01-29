@@ -1,5 +1,7 @@
 import { create } from 'apisauce';
 import { CamelcaseSerializer, SnakecaseSerializer } from 'cerealizr';
+import { HEADER } from '~constants/headersAuth';
+import { isAutenticated } from '~utils/auth';
 
 const baseURL = process.env.REACT_APP_API_URL;
 
@@ -58,6 +60,12 @@ api.addResponseTransform(response => {
 api.addRequestTransform(request => {
   if (request.data) {
     request.data = serializer.serialize(request?.data);
+  }
+  const auth = isAutenticated();
+  if(auth){
+    request.headers[HEADER.token] = auth.token;
+    request.headers[HEADER.uid] = auth.uid;
+    request.headers[HEADER.client] = auth.client;
   }
 });
 

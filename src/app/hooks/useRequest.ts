@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { ApiErrorResponse, ApiOkResponse, PROBLEM_CODE, ApiResponse } from 'apisauce';
 
 import { Nullable } from '~utils/types';
-import { saveTokenLocalStorage } from '~utils/auth';
+import { saveAccessHeaders } from '~utils/auth';
 
 export type Error<E> = { problem: PROBLEM_CODE; errorData?: E };
 type Request<P, D, E> = (params: P) => Promise<ApiResponse<D, E>>;
@@ -85,8 +85,17 @@ export const useLazyRequest = <P, D, E>({
         },
         onPostFetch: response => {
           setLoading(false);
-          if(saveToken && response.headers?.accessToken){
-            saveTokenLocalStorage(response.headers.accessToken);
+          if (
+            saveToken &&
+            response.headers?.accessToken &&
+            response.headers?.uid &&
+            response.headers?.client
+          ) {
+            saveAccessHeaders({
+              token: response.headers.accessToken,
+              uid: response.headers.uid,
+              client: response.headers.client
+            });
           }
           if (response.data) {
             withPostFetch?.(transformResponse(response.data));

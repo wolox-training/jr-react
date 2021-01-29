@@ -1,10 +1,12 @@
 import { KEYS } from '~constants/localStorage';
 import localStorage from '~services/LocalStorageService';
 
-export function isAutenticated() {
-  return localStorage.getValue(KEYS.token);
+import { AccessHeaders } from './types';
+
+export function isAutenticated(): AccessHeaders {
+  return localStorage.getValue(KEYS.accessHeaders);
 }
 
-export function saveTokenLocalStorage(token: string){
-  localStorage.setValue(KEYS.token, token);
+export function saveAccessHeaders(headers: AccessHeaders) {
+  localStorage.setValue(KEYS.accessHeaders, headers);
 }

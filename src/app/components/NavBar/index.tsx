@@ -14,7 +14,7 @@ function NavBar() {
   const history = useHistory();
 
   const logout = () => {
-    localStorage.removeValue(KEYS.token);
+    localStorage.removeValue(KEYS.accessHeaders);
     history.replace(PATHS.principal);
   };
 

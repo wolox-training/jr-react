@@ -1,5 +1,5 @@
-import { LoginBody } from "~screens/Login/types";
-import { RegisterBody } from "~screens/Register/types";
+import { LoginBody } from '~screens/Login/types';
+import { RegisterBody } from '~screens/Register/types';
 
 export type Nullable<T> = T | null;
 
@@ -27,4 +27,22 @@ export interface ContentForm {
 export interface Login {
   email: string;
   password: string;
+}
+
+export interface AccessHeaders {
+  token: string;
+  uid: string;
+  client: string;
+}
+
+export interface Book {
+  author: string;
+  createdAt: string;
+  editor: string;
+  genre: string;
+  id: number;
+  imageUrl: string;
+  title: string;
+  updatedAt: string;
+  year: number;
 }

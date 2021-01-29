@@ -1,3 +1,3 @@
 export const KEYS = {
-  token: 'token'
+  accessHeaders: 'accessHeaders'
 };
